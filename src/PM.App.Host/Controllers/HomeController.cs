@@ -44,7 +44,8 @@ namespace PM.Api.Host.Controllers
             ///For demo purposes this is stored in a session.
             httpContext.Session.SetObject(accessTokenKey, request);
 
-            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=manager_api offline_access&redirect_uri={settings.Value.RedirectUrl}";
+            /// Redirects to the IDP server for authentication. 
+            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=manager_api&redirect_uri={settings.Value.RedirectUrl}";
 
             return Redirect(endPoint);
         }
