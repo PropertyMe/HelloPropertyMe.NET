@@ -13,8 +13,6 @@
         <p>Hi and welcome to the HelloPropertyMe.NET.</p>
         <p>The sample has been created to help third parties integrate with PropertyMe platform in the most dynamic and efficient way.</p>
         <p>To get started, you would need to obtain an access token. If you don't have a clientId and client secret then please get in touch with PropertyMe.</p>
-        <p>By default PropertyMe would register http://localhost:65385/home/callback </p>
-
         <div class="col">
             @using (Html.BeginForm("Index", "Home", FormMethod.Post)) {
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
