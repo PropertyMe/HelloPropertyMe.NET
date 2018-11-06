@@ -1,0 +1,21 @@
+﻿@namespace Newtonsoft.Json
+@model string
+
+@{
+    ViewData["Title"] = "PropertyMe API";
+}
+
+<h2>PropertyMe Access Token</h2>
+<br />
+<p>
+    @ViewData["Message"]
+</p>
+
+<text>
+    @if (!string.IsNullOrEmpty(Model)) {
+        <code>
+
+            @Html.Raw(@Model)
+        </code>
+    }
+</text>
