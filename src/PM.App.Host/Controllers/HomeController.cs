@@ -46,7 +46,7 @@ namespace PM.Api.Host.Controllers
 
             /// Redirects to the IDP server for authentication. 
             //var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read&redirect_uri={settings.Value.RedirectUrl}";
-            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read activity:read property:read communication:read transaction:read&redirect_uri={settings.Value.RedirectUrl}";
+            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read&redirect_uri={settings.Value.RedirectUrl}";
             return Redirect(endPoint);
         }
 
