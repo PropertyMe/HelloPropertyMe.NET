@@ -45,7 +45,8 @@ namespace PM.Api.Host.Controllers
             httpContext.Session.SetObject(accessTokenKey, request);
 
             /// Redirects to the IDP server for authentication. 
-            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read%20activity:read%20property:read%20communication:read%20transaction:read&redirect_uri={settings.Value.RedirectUrl}";
+            // var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read%20activity:read%20property:read%20communication:read%20transaction:read&redirect_uri={settings.Value.RedirectUrl}";
+            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=transaction:read%20activity:read%20contact:read%20communication:write%20activity:write%20communication:read%20transaction:write%20contact:write%20property:write%20property:read&redirect_uri={settings.Value.RedirectUrl}";
             // var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read&redirect_uri={settings.Value.RedirectUrl}";
             return Redirect(endPoint);
         }
