@@ -45,8 +45,8 @@ namespace PM.Api.Host.Controllers
             httpContext.Session.SetObject(accessTokenKey, request);
 
             /// Redirects to the IDP server for authentication. 
-            // var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read%20activity:read%20property:read%20communication:read%20transaction:read&redirect_uri={settings.Value.RedirectUrl}";
-            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:write%20contact:read%20activity:read%20activity:write%20transaction:read%20transaction:write%20property:write%20property:read%20communication:read&redirect_uri={settings.Value.RedirectUrl}";
+            var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read%20activity:read%20property:read%20communication:read%20transaction:read&redirect_uri={settings.Value.RedirectUrl}";
+            //var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:write%20contact:read%20activity:read%20activity:write%20transaction:read%20transaction:write%20property:write%20property:read%20communication:read&redirect_uri={settings.Value.RedirectUrl}";
             // var endPoint = $"{settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact:read&redirect_uri={settings.Value.RedirectUrl}";
             return Redirect(endPoint);
         }
