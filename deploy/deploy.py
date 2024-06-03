@@ -1,6 +1,6 @@
 # script to deploy the app using command line arguments
-# wrap in authentication aws-vault exec <profile> -- python deploy.py --env ...
-# see password manager for the configuration values
+# requires that kubectl is configured correctly
+# pass manager has deployment configuration values
 
 import argparse
 import os
@@ -51,7 +51,7 @@ def main():
         # use a regex to find un-replaced variables
         results = re.findall(r'\b__\w+__\b', filedata)
         if results:
-            raise Exception("Found '__' did a variable not get replaced: " + str(results))
+            raise Exception("Did a variable not get replaced?, see: " + str(results))
 
         with open(file_path, 'w') as file:
             file.write(filedata)
