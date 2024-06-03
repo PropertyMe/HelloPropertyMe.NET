@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: __deploymentEnvironment__
+  name: hello-__deploymentEnvironment__
+  labels:
+    app: hello-__deploymentEnvironment__
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-__deploymentEnvironment__
+  template:
+    metadata:
+      labels:
+        app: hello-__deploymentEnvironment__
+    spec:
+      containers:
+      - name: hello-__deploymentEnvironment__
+        image: "__DOCKER_IMAGE__"
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "UAT"
+        - name: ASPNETCORE_URLS
+          value: "http://+:80"
+        - name: IntegrationSettings__AuthorityUrl
+          value: "__AUTHORITY_URL__"
+        - name: IntegrationSettings__PropertyMeApiEndPoint
+          value: "__API_ENDPOINT__"
+        - name: IntegrationSettings__RedirectUrl
+          value: "__REDIRECT_URL__"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "300m"
