@@ -12,7 +12,7 @@ import subprocess
 def main():
     parser = argparse.ArgumentParser(description='Deploy the hello app')
     parser.add_argument('--cluster-name', type=str, help='EKS cluster name', required=True)
-    parser.add_argument('--env', type=str, choices=['stage', 'production'], help='Environment to deploy the app', required=True)
+    parser.add_argument('--env', type=str, choices=['stage', 'production'], required=True)
     parser.add_argument('--image', type=str, help='Docker image to deploy, with :version', required=True)
     parser.add_argument('--authority-url', type=str, required=True)
     parser.add_argument('--redirect-url', type=str, required=True)
