@@ -39,3 +39,9 @@ body {
 .spacer {
     height: 20px;
 }
+
+.error {
+    color: red;
+    padding: 20px 0 20px 0;
+}
+

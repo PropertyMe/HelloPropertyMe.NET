@@ -11,6 +11,7 @@ public class ContactController(IOptions<IntegrationSettings> settings) : Control
     {
         var accessToken = HttpContext.Session.GetObject<string>("access_token");
         if (accessToken == null) {
+            ViewBag.ErrorMessage = "Access token is missing";
             return View("Index");
         }
         return View("Index", new ChangedContactsRequest 

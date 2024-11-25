@@ -13,8 +13,9 @@
 <text>
     @if (!string.IsNullOrEmpty(Model)) {
         <code>
-
             @Html.Raw(@Model)
         </code>
+        
+        <div class="alert alert-success mt-20"><a href="/contact">Try out the API</a> using this access token</div>
     }
 </text>
