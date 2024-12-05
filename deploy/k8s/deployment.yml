@@ -5,6 +5,9 @@ metadata:
   name: hello-__deploymentEnvironment__
   labels:
     app: hello-__deploymentEnvironment__
+    tags.datadoghq.com/env: __deploymentEnvironment__
+    tags.datadoghq.com/service: hello
+    tags.datadoghq.com/version: "__DOCKER_IMAGE_TAG__"
 spec:
   replicas: 1
   selector:
@@ -14,6 +17,9 @@ spec:
     metadata:
       labels:
         app: hello-__deploymentEnvironment__
+        tags.datadoghq.com/env: __deploymentEnvironment__
+        tags.datadoghq.com/service: hello
+        tags.datadoghq.com/version: "__DOCKER_IMAGE_TAG__"
     spec:
       containers:
       - name: hello-__deploymentEnvironment__
@@ -31,6 +37,18 @@ spec:
           value: "__API_ENDPOINT__"
         - name: IntegrationSettings__RedirectUrl
           value: "__REDIRECT_URL__"
+        - name: DD_ENV
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/env']
+        - name: DD_SERVICE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/service']
+        - name: DD_VERSION 
+          valueFrom: 
+            fieldRef: 
+              fieldPath: metadata.labels['tags.datadoghq.com/version']
         livenessProbe:
           httpGet:
             path: /
