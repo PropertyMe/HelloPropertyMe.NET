@@ -1,0 +1,31 @@
+﻿@model PropertyMeOAuthDemo.Models.AccessTokenRequest
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="page-header">
+    <h1>HelloPropertyMe.NET</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <h2>Hello and welcome</h2>
+        <p>Hi and welcome to the HelloPropertyMe.NET.</p>
+        <p>The sample has been created to help third parties integrate with PropertyMe platform in the most dynamic and efficient way.</p>
+        <p>To get started, you would need to obtain an access token. If you don't have a clientId and client secret then please get in touch with PropertyMe.</p>
+        <div class="col">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post)) {
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label for="inputClientId">Client Id</label>
+                    @Html.TextBoxFor(m => m.ClientId, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="inputClientSecret">Client Secret</label>
+                    @Html.TextBoxFor(m => m.ClientSecret, new { @class = "form-control" })
+                </div>
+                <button type="submit" class="btn btn-primary">Get Access Token</button>
+            }
+        </div>
+    </div>
+</div>
