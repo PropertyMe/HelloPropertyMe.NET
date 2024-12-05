@@ -32,6 +32,12 @@ def main():
         shutil.rmtree(temp_folder)
     shutil.copytree('k8s', temp_folder)
 
+    # Split image to get tag/ version
+    try: 
+        image_tag = args.image.split(':')[1]
+    except IndexError:
+        raise Exception("Image argument expected to be of format <IMAGE_NAME>:<VERSION>")
+
     # replace the variables in yaml files
     for f in os.listdir(temp_folder):
         if not f.endswith('.yml'):
@@ -46,6 +52,7 @@ def main():
         filedata = filedata.replace('__REDIRECT_URL__', args.redirect_url)
         filedata = filedata.replace('__API_ENDPOINT__', args.api_endpoint)
         filedata = filedata.replace('__DOCKER_IMAGE__', args.image)
+        filedata = filedata.replace('__DOCKER_IMAGE_TAG__', image_tag)
         filedata = filedata.replace('__TARGET_GROUP_ARN__', args.target_group_arn)
 
         # use a regex to find un-replaced variables
