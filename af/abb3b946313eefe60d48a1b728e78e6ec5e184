@@ -1,0 +1,27 @@
+src/PropertyMeOAuthDemo/Program.cs
+  s_d28c4dd9616cca::t_3f5ee793fa5979 11
+src/PropertyMeOAuthDemo/PropertyMeOAuthDemo.csproj
+  s_d28c4dd9616cca::t_9fe3cf0c890db0 4,11
+src/PropertyMeOAuthDemo/Controllers/HomeController.cs
+  s_d28c4dd9616cca::t_5088cd294505b5 1
+  s_d28c4dd9616cca::t_46f52f47d928df 64-66,72-79,88,92
+  s_d28c4dd9616cca::t_3ece564d0d3de9 13,15,18
+src/PropertyMeOAuthDemo/Dockerfile
+  s_d28c4dd9616cca::t_9fe3cf0c890db0 1,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "afabb3b946313eefe60d48a1b728e78e6ec5e184",
+  "prompts": {},
+  "sessions": {
+    "s_d28c4dd9616cca": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6b4e0f74-8c3f-4f76-82b1-b15a8b0d8e75",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Shyam Saraswati <shyamsaraswati@propertyme.com>"
+    }
+  }
+}
