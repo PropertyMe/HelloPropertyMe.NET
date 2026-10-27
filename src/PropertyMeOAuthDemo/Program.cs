@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddMvc().AddSessionStateTempDataProvider();
 builder.Services.AddSession();
+builder.Services.AddHttpClient();
 
 builder.Services.Configure<IntegrationSettings>(options => builder.Configuration.GetSection("IntegrationSettings").Bind(options));
 

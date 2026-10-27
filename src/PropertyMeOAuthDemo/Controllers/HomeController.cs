@@ -1,4 +1,4 @@
-﻿using IdentityModel.Client;
+﻿using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PropertyMeOAuthDemo.Models;
@@ -10,10 +10,12 @@ public class HomeController: Controller
     private const string AccessTokenKey = "accesstokenrequest";
     private readonly IOptions<IntegrationSettings> _settings;
     private readonly HttpContext _httpContext;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public HomeController(IOptions<IntegrationSettings> settings, IHttpContextAccessor httpContextAccessor)
+    public HomeController(IOptions<IntegrationSettings> settings, IHttpContextAccessor httpContextAccessor, IHttpClientFactory httpClientFactory)
     {
         _settings = settings;
+        _httpClientFactory = httpClientFactory;
         _httpContext = httpContextAccessor.HttpContext ?? throw new InvalidOperationException("httpContextAccessor.HttpContext is null");
     }
 
@@ -40,7 +42,7 @@ public class HomeController: Controller
         _httpContext.Session.SetObject(AccessTokenKey, request);
 
        /// Redirects to the IDP server for authentication. 
-        var endPoint = $"{_settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact%3Aread%20property%3Aread%20communication%3Aread%20transaction%3Aread%20offline_access&redirect_uri={_settings.Value.RedirectUrl}";
+        var endPoint = $"{_settings.Value.AuthorityUrl}/connect/authorize?response_type=code&state=&client_id={request.ClientId}&scope=contact%3Aread%20offline_access&redirect_uri={_settings.Value.RedirectUrl}";
         return Redirect(endPoint);
     }
 
@@ -59,15 +61,22 @@ public class HomeController: Controller
             return View();
         }
         
-        var disco = await DiscoveryClient.GetAsync($"{_settings.Value.AuthorityUrl}");
+        var client = _httpClientFactory.CreateClient();
+
+        var disco = await client.GetDiscoveryDocumentAsync($"{_settings.Value.AuthorityUrl}");
         if (disco.IsError) {
             ViewData["Message"] = "Unable to connect to IDP server";
             return View();
         }
 
-        var tokenClient = new TokenClient(disco.TokenEndpoint, accessTokenRequest.ClientId,
-            accessTokenRequest.ClientSecret);
-        var tokenResponse = await tokenClient.RequestAuthorizationCodeAsync(code, $"{_settings.Value.RedirectUrl}");
+        var tokenResponse = await client.RequestAuthorizationCodeTokenAsync(new AuthorizationCodeTokenRequest
+        {
+            Address = disco.TokenEndpoint,
+            ClientId = accessTokenRequest.ClientId,
+            ClientSecret = accessTokenRequest.ClientSecret,
+            Code = code,
+            RedirectUri = $"{_settings.Value.RedirectUrl}",
+        });
 
         if (tokenResponse.IsError)
         {
@@ -76,10 +85,10 @@ public class HomeController: Controller
         }
 
         ///For demo purposes we are storing the the access token in a session.
-        _httpContext.Session.SetObject("access_token", tokenResponse.Json["access_token"].ToString());
+        _httpContext.Session.SetObject("access_token", tokenResponse.AccessToken);
 
         ViewData["Message"] = "Below is the access token that can be used to request data from PropertyMe API's";
 
-        return View("Callback", tokenResponse.Json.ToString());
+        return View("Callback", tokenResponse.Raw);
     }
 }
